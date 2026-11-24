@@ -1,0 +1,2 @@
+{%- assign r = include.rating | default: 0 | plus: 0 -%}
+<span class="hearts" role="img" aria-label="{{ r }} out of 5 hearts">{% for i in (1..5) %}<svg class="{% if i <= r %}on{% else %}off{% endif %}"><use href="#i-links"/></svg>{% endfor %}</span>

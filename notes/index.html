@@ -1,0 +1,27 @@
+---
+title: "All notes"
+win_title: "all notes"
+icon: note
+permalink: /notes/
+---
+<header class="sec-head" style="--f: #fffaf0">
+  <span class="sec-icon"><svg><use href="#i-note"/></svg></span>
+  <div><h1>All notes</h1><p>Every note on this computer. Filter by folder or search.</p></div>
+  <span class="sec-count">{{ site.posts.size }} files</span>
+</header>
+
+<div class="search-row">
+  <label for="q">search:</label>
+  <input type="search" id="q" placeholder="titles, tags…" autocomplete="off">
+</div>
+<div class="filter-chips" role="group" aria-label="Filter by folder">
+  <button type="button" class="fchip active" data-section="">all</button>
+  {% for s in site.data.sections %}{% if s.kind == "notes" or s.kind == "reviews" %}
+  <button type="button" class="fchip" data-section="{{ s.id }}" style="--f: {{ s.color }}"><svg><use href="#i-{{ s.icon }}"/></svg>{{ s.label }}</button>
+  {% endif %}{% endfor %}
+</div>
+
+<ul class="file-list">
+  {% for n in site.posts %}{% include note-row.html note=n section_icon=true %}{% endfor %}
+</ul>
+<p class="empty-msg" id="empty" hidden>no files match (｡•́︿•̀｡)</p>

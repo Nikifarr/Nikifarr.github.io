@@ -1,0 +1,27 @@
+# Your Links page. Add sections and links freely.
+- section: "learning resources"
+  links:
+    - name: "Game Programming Patterns"
+      url: "https://gameprogrammingpatterns.com"
+      note: "free book by Robert Nystrom, design patterns explained with games"
+    - name: "Red Blob Games"
+      url: "https://www.redblobgames.com"
+      note: "interactive explainers on pathfinding, hex grids, noise…"
+    - name: "GDC Vault"
+      url: "https://gdcvault.com"
+      note: "talks from the Game Developers Conference, many free"
+    - name: "Godot Docs"
+      url: "https://docs.godotengine.org"
+      note: "the official manual"
+
+- section: "tools i like"
+  links:
+    - name: "Lospec"
+      url: "https://lospec.com"
+      note: "pixel art palettes & tutorials"
+    - name: "itch.io game jams"
+      url: "https://itch.io/jams"
+      note: "find a jam to join"
+
+- section: "friends & cool sites"
+  links: []   # add people's sites here as you meet them ✦

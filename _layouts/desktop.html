@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {% include head.html css="/assets/css/desktop.css" %}
+</head>
+{%- assign sec = site.data.sections | where: "id", page.section | first -%}
+{%- if page.collection == "posts" -%}
+  {%- assign win_icon = "note" -%}
+  {%- assign win_title = page.slug | append: ".txt" -%}
+  {%- capture address -%}C:&#92;Niki&#92;{{ sec.id | default: "notes" }}&#92;{{ page.slug }}.txt{%- endcapture -%}
+{%- else -%}
+  {%- assign win_icon = page.icon | default: sec.icon | default: "folder" -%}
+  {%- assign win_title = page.win_title | default: page.title -%}
+  {%- capture address -%}C:&#92;Niki{{ page.url | replace: "/", "&#92;" }}{%- endcapture -%}
+{%- endif -%}
+<body class="desk-page">
+  <script>try { if (sessionStorage.getItem('arcade-enter') === '1') { document.body.classList.add('from-arcade'); sessionStorage.setItem('arcade-enter', '0'); } } catch (e) {}</script>
+  {% include icons.svg %}
+  <a class="skip" href="#win-body">skip to content</a>
+  <div class="wallpaper" aria-hidden="true"><div class="hill"></div><div class="hill hill-2"></div></div>
+  <div class="enter-flash" aria-hidden="true"></div>
+
+  <div class="desktop">
+    {% include desk-icons.html current=sec.id %}
+
+    <main class="win main-win" id="main-win" style="--c: {{ sec.color | default: '#ffd23f' }}">
+      <div class="win-bar">
+        <span class="win-icon"><svg><use href="#i-{{ win_icon }}"/></svg></span>
+        <h2 class="win-title">{{ win_title }}</h2>
+        <div class="win-ctrls">
+          <button type="button" class="wc wc-min" data-act="min" aria-label="Minimize window"><span>_</span></button>
+          <button type="button" class="wc wc-max" data-act="max" aria-label="Maximize window"><span>□</span></button>
+          <a class="wc wc-close to-arcade" href="{{ '/' | relative_url }}" aria-label="Close window and go back to the arcade"><span>×</span></a>
+        </div>
+      </div>
+      <div class="menubar" aria-hidden="true"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span><u>T</u>ools</span><span><u>H</u>elp</span></div>
+      <div class="toolbar">
+        <button type="button" class="tool" data-act="back"><svg><use href="#i-folder"/></svg><span>Back</span></button>
+        <a class="tool to-arcade" href="{{ '/' | relative_url }}"><svg><use href="#i-arcade"/></svg><span>Arcade</span></a>
+        <a class="tool" href="{{ '/notes/' | relative_url }}"><svg><use href="#i-note"/></svg><span>All notes</span></a>
+        <button type="button" class="tool" data-act="random"><svg><use href="#i-design"/></svg><span>Random</span></button>
+        <button type="button" class="tool sfx-toggle"><svg><use href="#i-sound"/></svg><span>Sound</span></button>
+      </div>
+      <div class="address"><span class="addr-label">Address</span><span class="addr-box"><svg><use href="#i-{{ win_icon }}"/></svg>{{ address }}</span></div>
+
+      <div class="win-body" id="win-body" tabindex="-1">
+        {{ content }}
+      </div>
+
+      <div class="statusbar">
+        <span>{% if page.collection == "posts" %}last saved {{ page.updated | default: page.date | date: "%d/%m/%y" }}{% else %}{{ site.posts.size }} notes on this computer{% endif %}</span>
+        <span>✦ {{ site.title }}</span>
+      </div>
+    </main>
+
+    {% include messenger.html current=sec.id %}
+  </div>
+
+  {% include taskbar.html win_icon=win_icon win_title=win_title %}
+
+  <script>
+    window.NOTE_URLS = [{% for p in site.posts %}"{{ p.url | relative_url }}"{% unless forloop.last %},{% endunless %}{% endfor %}];
+    window.ARCADE_URL = "{{ '/' | relative_url }}";
+  </script>
+  <script src="{{ '/assets/js/desktop.js' | relative_url }}"></script>
+</body>
+</html>

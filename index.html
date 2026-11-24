@@ -1,0 +1,131 @@
+---
+layout: arcade
+title: Home
+---
+<!-- Plain links for keyboard / screen-reader visitors who'd rather skip the arcade -->
+<nav class="skip-nav" aria-label="Skip the arcade">
+  <p>{{ site.title }}: {{ site.tagline }}. Jump straight to:</p>
+  <ul>
+    {% for s in site.data.sections %}<li><a href="{{ s.url | relative_url }}">{{ s.name }}</a></li>{% endfor %}
+  </ul>
+</nav>
+
+<div class="room">
+  <div class="wall" aria-hidden="true"></div>
+  <div class="desk" aria-hidden="true"></div>
+
+  <div class="zoomer" id="zoomer">
+    <div class="stage" id="stage">
+      <div class="monitor">
+
+        <!-- the cat that lives on top of the machine -->
+        <button class="top-cat" type="button" aria-label="pet the cat">
+          {% include pixel-cat.svg size=96 %}
+          <span class="bubble" aria-live="polite"></span>
+        </button>
+
+        <!-- CRT -->
+        <div class="screen-frame">
+          <div class="screen" id="screen" data-state="attract" data-palette="green">
+
+            <!-- ATTRACT MODE -->
+            <div class="scr scr-attract">
+              <p class="scr-top"><span>1UP 000000</span><span>HI {{ site.author | upcase }} 999999</span></p>
+              <p class="attract-title">{{ site.title | upcase | replace: "'S ", "'S<br>" }}</p>
+              <p class="attract-sub">{{ site.tagline | upcase }}</p>
+              <p class="attract-coin blink">INSERT COIN</p>
+              <p class="attract-help">click the coin slot or press ENTER</p>
+              <p class="scr-bottom"><span>© {{ site.time | date: "%Y" }} {{ site.author | upcase }}</span><span class="credits">CREDIT 00</span></p>
+            </div>
+
+            <!-- STAGE SELECT -->
+            <div class="scr scr-menu">
+              <p class="menu-head"><span>★ SELECT STAGE ★</span><span class="credits">CREDIT 00</span></p>
+              <ul class="menu" id="menu" role="listbox" aria-label="Choose a section">
+                {% for s in site.data.sections %}
+                <li role="option" class="menu-item" data-url="{{ s.url | relative_url }}" data-name="{{ s.name | upcase }}" data-n="{{ forloop.index }}">
+                  <span class="mi-icon"><svg><use href="#i-{{ s.icon }}"/></svg></span>
+                  <span class="mi-label">{{ s.name | upcase }}</span>
+                  <span class="mi-cursor" aria-hidden="true">◀</span>
+                </li>
+                {% endfor %}
+                <li role="option" class="menu-item secret-item" data-url="{{ '/secret/' | relative_url }}" data-name="??? SECRET" hidden>
+                  <span class="mi-icon"><svg><use href="#i-secret"/></svg></span>
+                  <span class="mi-label">??? SECRET</span>
+                  <span class="mi-cursor" aria-hidden="true">◀</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- LOADING -->
+            <div class="scr scr-load">
+              <p class="load-stage">STAGE <span id="load-n">01</span></p>
+              <p class="load-name" id="load-name">C++ NOTES</p>
+              <p class="load-bar"><span id="load-fill"></span></p>
+              <p class="load-ready blink">GET READY!</p>
+            </div>
+
+            <p class="toast" id="toast" aria-live="polite"></p>
+            <div class="static" aria-hidden="true"></div>
+            <div class="scanlines" aria-hidden="true"></div>
+            <div class="glass" aria-hidden="true"></div>
+            <div class="flash" id="flash" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <!-- control deck -->
+        <div class="deck">
+          <div class="grill grill-l"><button class="speaker" type="button" aria-label="Speaker: play a tune"></button></div>
+
+          <div class="joy-wrap">
+            <button class="joy-arrow up" type="button" aria-label="Move up">▲</button>
+            <div class="joystick" id="joystick" aria-hidden="true">
+              <div class="joy-base"></div>
+              <div class="joy-stick" id="joy-stick"><div class="joy-shaft"></div><div class="joy-ball"></div></div>
+            </div>
+            <button class="joy-arrow down" type="button" aria-label="Move down">▼</button>
+          </div>
+
+          <div class="center-ctrls">
+            <button class="logo" id="logo" type="button" aria-label="{{ site.title }} logo">NIKI<small>arcade</small></button>
+            <div class="mini-row">
+              <button class="start-btn" type="button" id="start-btn"><span>1P</span>START</button>
+              <div class="coin-unit">
+                <button class="coin-slot" type="button" id="coin-slot" aria-label="Insert a coin"><span class="slot-hole"></span></button>
+                <span class="slot-label">INSERT COIN</span>
+                <span class="coin" id="coin" aria-hidden="true"><svg><use href="#i-s-coin"/></svg></span>
+              </div>
+              <button class="sfx-toggle sound-btn" type="button"><span class="led"></span><span class="sfx-label">SOUND ON</span></button>
+            </div>
+            <p class="deck-hint" aria-hidden="true">↑↓ MOVE · A SELECT · B BACK · C COLOR</p>
+          </div>
+
+          <div class="btns">
+            <button class="abtn a" type="button" id="btn-a" aria-label="A: select"><span>A</span></button>
+            <button class="abtn b" type="button" id="btn-b" aria-label="B: back"><span>B</span></button>
+            <button class="abtn c" type="button" id="btn-c" aria-label="C: change screen color"><span>C</span></button>
+            <small class="lbl">SELECT</small><small class="lbl">BACK</small><small class="lbl">COLOR</small>
+          </div>
+
+          <div class="grill grill-r"><button class="speaker" type="button" aria-label="Speaker: play a tune"></button></div>
+        </div>
+
+        <!-- stickers on the bezel (they peel when you hover them) -->
+        <button class="sticker st-star" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-s-star"/></svg></button>
+        <button class="sticker st-pad" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-s-gamepad"/></svg></button>
+        <button class="sticker st-text st-game" type="button" tabindex="-1" aria-hidden="true">GAME<i>♥</i></button>
+        <button class="sticker st-potion" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-s-potion"/></svg></button>
+        <button class="sticker st-floppy" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-s-floppy"/></svg></button>
+        <button class="sticker st-text st-start" type="button" tabindex="-1" aria-hidden="true">PRESS<br>START</button>
+        <button class="sticker st-smile" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-s-smile"/></svg></button>
+        <button class="sticker st-heart" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-s-heart"/></svg></button>
+        <button class="sticker lucky" type="button" id="lucky" aria-label="Lucky cat sticker">
+          <span class="lucky-paw"></span>
+          {% include pixel-cat.svg size=60 %}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<noscript><p class="noscript">The arcade needs JavaScript, but you can use the links at the top of this page.</p></noscript>

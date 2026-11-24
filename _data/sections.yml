@@ -1,0 +1,79 @@
+# The stages on the arcade menu, in order. They also become the desktop icons,
+# start-menu entries and Messenger "contacts" on the inside pages.
+#
+#   id     – used in a note's front matter:  section: cpp
+#   kind   – notes | projects | album | reviews | page
+#   icon   – one of: cpp, design, projects, album, reviews, devlog, about, links
+#   label  – the cute lowercase name under the desktop icon
+
+- id: cpp
+  name: "C++ Notes"
+  label: "c++ notes"
+  kind: notes
+  url: /cpp/
+  icon: cpp
+  color: "#5ce1e6"
+  blurb: "Language features, memory, patterns and engine-style code."
+
+- id: design
+  name: "Game Design"
+  label: "game design"
+  kind: notes
+  url: /design/
+  icon: design
+  color: "#ff5ec8"
+  blurb: "Mechanics, systems, game feel, frameworks, level design."
+
+- id: projects
+  name: "Projects"
+  label: "projects"
+  kind: projects
+  url: /projects/
+  icon: projects
+  color: "#ffd23f"
+  blurb: "Things I'm building, finished or not."
+
+- id: album
+  name: "Album"
+  label: "album <3"
+  kind: album
+  url: /album/
+  icon: album
+  color: "#7bff9e"
+  blurb: "Screenshots, sketches, jam photos and other pictures."
+
+- id: reviews
+  name: "Game Reviews"
+  label: "reviews"
+  kind: reviews
+  url: /reviews/
+  icon: reviews
+  color: "#ff9f5a"
+  blurb: "Games I've played, broken down from a designer's point of view."
+
+- id: devlog
+  name: "Devlog"
+  label: "devlog"
+  kind: notes
+  url: /devlog/
+  icon: devlog
+  color: "#c3a6ff"
+  blurb: "Progress logs, goals, reflections, jam diaries."
+
+- id: about
+  name: "About Me"
+  label: "about me"
+  kind: page
+  url: /about/
+  icon: about
+  color: "#8ab4ff"
+  blurb: "Who's behind the arcade."
+
+- id: links
+  name: "Links & Guestbook"
+  label: "links & guestbook"
+  kind: page
+  url: /links/
+  icon: links
+  color: "#ff8fab"
+  blurb: "Resources, friends' sites, buttons, and a place to say hi."

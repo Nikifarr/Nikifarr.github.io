@@ -1,0 +1,48 @@
+---
+title: "Links & Guestbook"
+win_title: "links & guestbook"
+section: links
+permalink: /links/
+---
+{%- assign sec = site.data.sections | where: "id", "links" | first -%}
+<header class="sec-head" style="--f: {{ sec.color }}">
+  <span class="sec-icon"><svg><use href="#i-links"/></svg></span>
+  <div><h1>{{ sec.name }}</h1><p>{{ sec.blurb }}</p></div>
+</header>
+
+<section class="guestbook">
+  {% if site.guestbook_url != "" %}
+  <p><strong>leave me a message! ♡</strong> I read every single one.</p>
+  <a class="btn big" href="{{ site.guestbook_url }}">✎ sign my guestbook</a>
+  {% else %}
+  <p><strong>✎ guestbook coming soon!</strong></p>
+  <p class="muted">Get a free guestbook (for example from <a href="https://atabook.org">atabook.org</a>) and put its address in <code>guestbook_url</code> in <code>_config.yml</code>.</p>
+  {% endif %}
+</section>
+
+{% for group in site.data.links %}
+<h2 class="link-head">» {{ group.section }}</h2>
+{% if group.links.size > 0 %}
+<ul class="link-list">
+  {% for l in group.links %}<li><a href="{{ l.url }}">{{ l.name }}</a>{% if l.note %} <span class="muted">· {{ l.note }}</span>{% endif %}</li>{% endfor %}
+</ul>
+{% else %}
+<p class="muted">no one here yet. wanna swap buttons? ♡</p>
+{% endif %}
+{% endfor %}
+
+<h2 class="link-head">» buttons</h2>
+<div class="button-wall">
+  {% for b in site.data.buttons %}
+  {% if b.url %}<a href="{{ b.url }}"><img src="{{ '/assets/img/buttons/' | append: b.img | relative_url }}" alt="{{ b.alt }}" width="88" height="31"></a>{% else %}<img src="{{ '/assets/img/buttons/' | append: b.img | relative_url }}" alt="{{ b.alt }}" width="88" height="31">{% endif %}
+  {% endfor %}
+</div>
+
+<h2 class="link-head">» link back to me</h2>
+<div class="linkme">
+  <img src="{{ '/assets/img/buttons/niki-devlog.svg' | relative_url }}" alt="{{ site.title }}" width="88" height="31" class="big-btn">
+  <div>
+    <p class="muted">copy this code onto your site:</p>
+    <textarea readonly rows="3" aria-label="HTML code for my button" onclick="this.select()">&lt;a href="{{ site.url }}{{ site.baseurl }}/"&gt;&lt;img src="{{ site.url }}{{ site.baseurl }}/assets/img/buttons/niki-devlog.svg" alt="{{ site.title }}" width="88" height="31"&gt;&lt;/a&gt;</textarea>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+# 88x31 buttons shown in the sidebar. Put images in assets/img/buttons/.
+# "url" is optional — leave it out for decorative buttons.
+# Tip: when you swap buttons with friends, add theirs here with a link to their site!
+- img: learning-gamedev.svg
+  alt: "learning gamedev"
+- img: pixel-art.svg
+  alt: "I love pixel art"
+- img: github-pages.svg
+  alt: "hosted on GitHub Pages"
+  url: "https://pages.github.com"
+- img: jekyll.svg
+  alt: "powered by Jekyll"
+  url: "https://jekyllrb.com"
+- img: coffee.svg
+  alt: "runs on coffee"
+- img: game-jam.svg
+  alt: "game jam hopeful"
+  url: "https://itch.io/jams"
+- img: no-cookies.svg
+  alt: "no cookies, no tracking"

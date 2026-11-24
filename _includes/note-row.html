@@ -1,0 +1,14 @@
+{%- assign n = include.note -%}
+{%- assign ns = site.data.sections | where: "id", n.section | first -%}
+<li class="file" data-section="{{ n.section }}" style="--f: {{ ns.color | default: '#ffd23f' }}"
+    data-search="{{ n.title | downcase | escape }} {{ n.tags | join: ' ' | downcase | escape }} {{ n.summary | downcase | escape }}">
+  <a class="file-link" href="{{ n.url | relative_url }}">
+    <svg class="file-icon"><use href="#i-{% if include.section_icon %}{{ ns.icon }}{% else %}note{% endif %}"/></svg>
+    <span class="file-main">
+      <span class="file-title">{{ n.title }}</span>
+      {% if n.summary %}<span class="file-sum">{{ n.summary }}</span>{% endif %}
+      <span class="file-tags">{% if include.section_icon %}<span class="chip">{{ ns.label }}</span>{% endif %}{% if n.status %}<span class="status status-{{ n.status }}">{{ n.status }}</span>{% endif %}{% for tag in n.tags limit: 4 %}<span class="tag">#{{ tag }}</span>{% endfor %}</span>
+    </span>
+    <time class="file-date" datetime="{{ n.date | date_to_xmlschema }}">{{ n.date | date: "%d/%m/%y" }}</time>
+  </a>
+</li>

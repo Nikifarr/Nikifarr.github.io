@@ -1,0 +1,32 @@
+---
+layout: desktop
+---
+{%- assign sec = site.data.sections | where: "id", page.section | first -%}
+{%- assign notes = site.posts | where: "section", sec.id -%}
+<header class="sec-head" style="--f: {{ sec.color }}">
+  <span class="sec-icon"><svg><use href="#i-{{ sec.icon }}"/></svg></span>
+  <div>
+    <h1>{{ sec.name }}</h1>
+    <p>{{ sec.blurb }}</p>
+  </div>
+  <span class="sec-count">{{ notes.size }} {% if notes.size == 1 %}file{% else %}files{% endif %}</span>
+</header>
+
+{{ content }}
+
+{% if notes.size > 0 %}
+<div class="search-row">
+  <label for="q">search:</label>
+  <input type="search" id="q" placeholder="titles, tags…" autocomplete="off">
+</div>
+<ul class="file-list">
+  {% for n in notes %}{% include note-row.html note=n %}{% endfor %}
+</ul>
+<p class="empty-msg" id="empty" hidden>no files match that search (｡•́︿•̀｡)</p>
+{% else %}
+<div class="empty-folder">
+  <svg><use href="#i-folder"/></svg>
+  <p><strong>this folder is empty… for now!</strong></p>
+  <p class="muted">Add a note: copy <code>_templates/note-template.md</code> into <code>_posts/</code> and set <code>section: {{ sec.id }}</code>.</p>
+</div>
+{% endif %}

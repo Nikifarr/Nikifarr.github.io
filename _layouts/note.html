@@ -1,0 +1,70 @@
+---
+layout: desktop
+---
+{%- assign sec = site.data.sections | where: "id", page.section | first -%}
+{%- assign words = content | number_of_words -%}
+{%- assign minutes = words | divided_by: 200 | at_least: 1 -%}
+{%- assign siblings = site.posts | where: "section", page.section -%}
+{%- for p in siblings -%}{%- if p.url == page.url -%}{%- assign i = forloop.index0 -%}{%- endif -%}{%- endfor -%}
+{%- assign newer_i = i | minus: 1 -%}{%- assign older_i = i | plus: 1 -%}
+<article class="note" style="--f: {{ sec.color | default: '#ffd23f' }}">
+  <p class="crumbs"><a href="{{ sec.url | default: '/notes/' | relative_url }}">◀ back to {{ sec.name | default: "all notes" }}</a></p>
+
+  <header class="note-head">
+    <p class="note-kicker">
+      <span class="chip"><svg><use href="#i-{{ sec.icon | default: 'note' }}"/></svg>{{ sec.label }}</span>
+      {% if page.status %}<span class="status status-{{ page.status }}" title="How finished this note is">{{ page.status }}</span>{% endif %}
+    </p>
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}<p class="note-summary">{{ page.summary }}</p>{% endif %}
+    <p class="note-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time> · {{ minutes }} min read
+      {% if page.updated %}· updated {{ page.updated | date: "%b %-d, %Y" }}{% endif %}
+    </p>
+  </header>
+
+  {% if page.section == "reviews" %}
+  <div class="review-box">
+    {% if page.image %}<img src="{{ page.image | relative_url }}" alt="{{ page.game }}">{% endif %}
+    <dl>
+      <dt>game</dt><dd>{{ page.game }}{% if page.year %} ({{ page.year }}){% endif %}</dd>
+      {% if page.platform %}<dt>played on</dt><dd>{{ page.platform }}</dd>{% endif %}
+      <dt>rating</dt><dd>{% include hearts.html rating=page.rating %}</dd>
+      {% if page.verdict %}<dt>verdict</dt><dd>{{ page.verdict }}</dd>{% endif %}
+    </dl>
+  </div>
+  {% endif %}
+
+  {% if page.takeaways %}
+  <aside class="sticky">
+    <h2>key takeaways</h2>
+    <ul>
+      {% for item in page.takeaways %}<li>{{ item | markdownify | remove: '<p>' | remove: '</p>' }}</li>{% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  {% if page.sources %}
+  <section class="sources">
+    <h2>sources &amp; further reading</h2>
+    <ul>
+      {% for s in page.sources %}
+      <li>{% if s.url %}<a href="{{ s.url }}">{{ s.title }}</a>{% else %}{{ s.title }}{% endif %}{% if s.note %} <span class="muted">· {{ s.note }}</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if page.tags.size > 0 %}
+  <p class="note-tags">{% for tag in page.tags %}<a class="tag" href="{{ '/notes/' | relative_url }}?q={{ tag | url_encode }}">#{{ tag }}</a>{% endfor %}</p>
+  {% endif %}
+
+  <nav class="note-nav" aria-label="More in {{ sec.name }}">
+    {% if older_i < siblings.size %}{% assign older = siblings[older_i] %}<a class="prev" href="{{ older.url | relative_url }}"><span>◀ older</span>{{ older.title }}</a>{% else %}<span></span>{% endif %}
+    {% if newer_i >= 0 %}{% assign newer = siblings[newer_i] %}<a class="next" href="{{ newer.url | relative_url }}"><span>newer ▶</span>{{ newer.title }}</a>{% endif %}
+  </nav>
+</article>

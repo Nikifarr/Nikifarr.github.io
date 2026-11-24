@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {% include head.html css="/assets/css/arcade.css" %}
+</head>
+<body class="arcade-page">
+  {% include icons.svg %}
+  {{ content }}
+  <script src="{{ '/assets/js/arcade.js' | relative_url }}"></script>
+</body>
+</html>

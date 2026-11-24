@@ -1,0 +1,19 @@
+# Your projects, newest first. Copy a block to add one.
+#
+# - title: "Name"
+#   image: /assets/img/projects/my-game.png   # optional screenshot (put it in assets/img/projects/)
+#   description: "One or two sentences."
+#   status: "in progress"                     # anything: idea, in progress, finished, abandoned…
+#   progress: 40                               # 0–100, shown as a pixel progress bar
+#   tools: [Godot, GDScript, Aseprite]
+#   links:
+#     - name: "play on itch.io"
+#       url: "https://example.itch.io/my-game"
+#   note: /design/some-related-note/           # optional link to a note about it
+
+- title: "Niki's Arcade (this website!)"
+  description: "My personal site: an arcade cabinet that leads into a retro desktop full of notes. Built with Jekyll and hosted on GitHub Pages."
+  status: "in progress"
+  progress: 80
+  tools: [Jekyll, HTML, CSS, JavaScript]
+  links: []

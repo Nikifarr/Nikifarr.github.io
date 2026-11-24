@@ -1,0 +1,37 @@
+<footer class="taskbar">
+  <button type="button" class="start" id="start" aria-expanded="false" aria-controls="start-menu">
+    <svg><use href="#i-arcade"/></svg><span>start</span>
+  </button>
+
+  <div class="start-menu" id="start-menu" hidden>
+    <div class="sm-head">
+      <span class="sm-avatar">{% if site.avatar != "" %}<img src="{{ site.avatar | relative_url }}" alt="">{% else %}{% include pixel-cat.svg size=40 %}{% endif %}</span>
+      <strong>{{ site.author }}</strong>
+    </div>
+    <div class="sm-cols">
+      <ul class="sm-list">
+        {% for s in site.data.sections %}
+        <li><a href="{{ s.url | relative_url }}" style="--f: {{ s.color }}"><svg><use href="#i-{{ s.icon }}"/></svg>{{ s.name }}</a></li>
+        {% endfor %}
+      </ul>
+      <ul class="sm-list sm-side">
+        <li><a href="{{ '/notes/' | relative_url }}" style="--f:#fffaf0"><svg><use href="#i-note"/></svg>All notes</a></li>
+        <li><a href="{{ '/feed.xml' | relative_url }}" style="--f:#ff9f5a"><svg><use href="#i-devlog"/></svg>RSS feed</a></li>
+        <li class="secret-only" hidden><a href="{{ '/secret/' | relative_url }}" style="--f:#ffd23f"><svg><use href="#i-secret"/></svg>???</a></li>
+      </ul>
+    </div>
+    <div class="sm-foot">
+      <a class="sm-off to-arcade" href="{{ '/' | relative_url }}"><svg><use href="#i-arcade"/></svg>Back to arcade</a>
+    </div>
+  </div>
+
+  <div class="tasks">
+    <button type="button" class="task active" data-task="main-win"><svg><use href="#i-{{ include.win_icon }}"/></svg><span>{{ include.win_title }}</span></button>
+    <button type="button" class="task active task-ms" data-task="messenger"><svg><use href="#i-about"/></svg><span>Messenger</span></button>
+  </div>
+
+  <div class="tray">
+    <button type="button" class="sfx-toggle tray-btn"><svg><use href="#i-sound"/></svg></button>
+    <span class="clock" id="clock">3:02 AM</span>
+  </div>
+</footer>

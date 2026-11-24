@@ -1,0 +1,34 @@
+---
+title: "Game Reviews"
+section: reviews
+permalink: /reviews/
+---
+{%- assign sec = site.data.sections | where: "id", "reviews" | first -%}
+{%- assign reviews = site.posts | where: "section", "reviews" -%}
+<header class="sec-head" style="--f: {{ sec.color }}">
+  <span class="sec-icon"><svg><use href="#i-reviews"/></svg></span>
+  <div><h1>{{ sec.name }}</h1><p>{{ sec.blurb }}</p></div>
+  <span class="sec-count">{{ reviews.size }} played</span>
+</header>
+
+{% if reviews.size > 0 %}
+<div class="review-grid">
+  {% for r in reviews %}
+  <a class="review-card" href="{{ r.url | relative_url }}">
+    <span class="rc-cover">{% if r.image %}<img src="{{ r.image | relative_url }}" alt="">{% else %}<svg><use href="#i-s-gamepad"/></svg>{% endif %}</span>
+    <span class="rc-body">
+      <span class="rc-game">{{ r.game | default: r.title }}</span>
+      <span class="rc-meta">{{ r.platform }}{% if r.year %} · {{ r.year }}{% endif %}</span>
+      {% include hearts.html rating=r.rating %}
+      {% if r.verdict %}<span class="rc-verdict">“{{ r.verdict }}”</span>{% endif %}
+    </span>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-folder">
+  <svg><use href="#i-s-gamepad"/></svg>
+  <p><strong>no reviews yet. press start!</strong></p>
+  <p class="muted">Copy <code>_templates/review-template.md</code> into <code>_posts/</code>. It has fields for the game, platform, a 1–5 heart rating and a one-line verdict.</p>
+</div>
+{% endif %}

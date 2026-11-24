@@ -1,0 +1,16 @@
+<nav class="desk-icons" aria-label="Desktop">
+  <a class="dicon to-arcade" href="{{ '/' | relative_url }}" style="--f: #ff5ec8">
+    <svg><use href="#i-arcade"/></svg><span>arcade.exe</span>
+  </a>
+  {% for s in site.data.sections %}
+  <a class="dicon{% if include.current == s.id %} current{% endif %}" href="{{ s.url | relative_url }}" style="--f: {{ s.color }}"{% if include.current == s.id %} aria-current="page"{% endif %}>
+    <svg><use href="#i-{{ s.icon }}"/></svg><span>{{ s.label }}</span>
+  </a>
+  {% endfor %}
+  <a class="dicon" href="{{ '/notes/' | relative_url }}" style="--f: #fffaf0">
+    <svg><use href="#i-note"/></svg><span>all notes</span>
+  </a>
+  <a class="dicon secret-only" href="{{ '/secret/' | relative_url }}" style="--f: #ffd23f" hidden>
+    <svg><use href="#i-secret"/></svg><span>???</span>
+  </a>
+</nav>

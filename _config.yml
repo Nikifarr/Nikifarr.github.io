@@ -1,0 +1,71 @@
+# ------------------------------------------------------------
+#  Site settings — edit these to make the site yours
+# ------------------------------------------------------------
+title: "Niki's Arcade"
+tagline: "notes from learning gamedev & game design"
+description: "A playful learning log about C++, game design, projects and the games I play."
+author: "Niki"
+
+# Your status — shows in the Messenger window and on the About page
+mood: "excited ✦"
+currently_studying: "C++, game feel and level design"
+now_playing: "Celeste"
+
+# Optional profile picture for the About page / Messenger (e.g. /assets/img/avatar.png).
+# Leave "" to use the pixel cat.
+avatar: ""
+
+# Optional guestbook link, e.g. a free one from atabook.org → "https://YOURNAME.atabook.org"
+guestbook_url: ""
+
+# Links shown on the About page. Leave a value "" to hide it.
+social:
+  github: "Nikifarr" # your GitHub username
+  itch: ""          # your itch.io username
+  bluesky: ""       # e.g. you.bsky.social
+  email: ""
+
+# ------------------------------------------------------------
+#  GitHub Pages address
+#  Repo named  <username>.github.io  → leave baseurl empty.
+#  Any other repo name, e.g. "arcade"  → baseurl: "/arcade"
+# ------------------------------------------------------------
+url: "https://nikifarr.github.io"
+baseurl: ""
+
+# ------------------------------------------------------------
+#  Build settings (no need to touch these)
+# ------------------------------------------------------------
+permalink: /notes/:title/
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: note
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: desktop
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+feed:
+  path: feed.xml
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - _templates
+  - tools
+  - vendor

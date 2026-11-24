@@ -1,0 +1,45 @@
+---
+title: "Album"
+win_title: "album <3"
+section: album
+permalink: /album/
+---
+{%- assign sec = site.data.sections | where: "id", "album" | first -%}
+<header class="sec-head" style="--f: {{ sec.color }}">
+  <span class="sec-icon"><svg><use href="#i-album"/></svg></span>
+  <div><h1>{{ sec.name }}</h1><p>{{ sec.blurb }}</p></div>
+  <span class="sec-count">{{ site.data.album.size }} pics</span>
+</header>
+
+{% if site.data.album.size > 0 %}
+<div class="album-grid">
+  {% for a in site.data.album %}
+  <figure class="polaroid photo" style="--tilt: {{ a.tilt | default: 0 }}deg">
+    <span class="tape" aria-hidden="true"></span>
+    <button type="button" class="pol-img zoomable" data-full="{{ a.image | relative_url }}" data-caption="{{ a.caption | escape }}" aria-label="Open photo: {{ a.caption | escape }}">
+      <img src="{{ a.image | relative_url }}" alt="{{ a.caption | escape }}" loading="lazy">
+    </button>
+    <figcaption>{{ a.caption }}{% if a.date %} <time>{{ a.date | date: "%d.%m.%y" }}</time>{% endif %}</figcaption>
+  </figure>
+  {% endfor %}
+</div>
+{% else %}
+<p class="note-box">📷 The album is empty, so here are some placeholder polaroids. Put pictures in <code>assets/album/</code> and list them in <code>_data/album.yml</code>.</p>
+<div class="album-grid">
+  {% assign ph = "first jam photo|my desk setup|pixel art wip|level sketch|team photo ♡|a game i loved" | split: "|" %}
+  {% assign ic = "s-star|s-floppy|s-heart|design|s-gamepad|s-cassette" | split: "|" %}
+  {% for cap in ph %}
+  <figure class="polaroid photo placeholder" style="--tilt: {% cycle '-2deg', '1.5deg', '-1deg', '2.2deg', '-1.6deg', '0.8deg' %}">
+    <span class="tape" aria-hidden="true"></span>
+    <div class="pol-img"><svg><use href="#i-{{ ic[forloop.index0] }}"/></svg></div>
+    <figcaption>{{ cap }}</figcaption>
+  </figure>
+  {% endfor %}
+</div>
+{% endif %}
+
+<dialog class="lightbox" id="lightbox">
+  <form method="dialog"><button class="lb-close" aria-label="Close">×</button></form>
+  <img src="" alt="">
+  <p class="lb-cap"></p>
+</dialog>

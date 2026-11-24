@@ -1,0 +1,22 @@
+---
+title: "Page not found"
+win_title: "error"
+icon: secret
+permalink: /404.html
+---
+<div class="error-dialog">
+  <p class="go">GAME OVER</p>
+  <p><strong>C:&#92;Niki{{ page.url | replace: "/", "&#92;" }} could not be found.</strong></p>
+  <p>This page doesn't exist (yet). Maybe it fell out of the level?</p>
+  <p class="continue">CONTINUE? <span id="countdown">9</span></p>
+  <p class="err-btns"><a class="btn to-arcade" href="{{ '/' | relative_url }}">back to arcade</a> <a class="btn alt" href="{{ '/notes/' | relative_url }}">all notes</a></p>
+</div>
+<script>
+  (function () {
+    var n = 9, el = document.getElementById('countdown');
+    var t = setInterval(function () {
+      n--; el.textContent = n;
+      if (n <= 0) { clearInterval(t); var a = document.querySelector('.err-btns .to-arcade'); if (a) a.click(); }
+    }, 1000);
+  })();
+</script>

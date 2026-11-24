@@ -1,0 +1,56 @@
+<aside class="win messenger" id="messenger" aria-label="Messenger">
+  <div class="win-bar">
+    <span class="win-icon"><svg><use href="#i-about"/></svg></span>
+    <h2 class="win-title">Niki Messenger</h2>
+    <div class="win-ctrls">
+      <button type="button" class="wc wc-close" data-act="hide-messenger" aria-label="Close Messenger"><span>×</span></button>
+    </div>
+  </div>
+  <div class="menubar small" aria-hidden="true"><span>File</span><span>Contacts</span><span>Actions</span><span>Help</span></div>
+
+  <div class="ms-me">
+    <a class="ms-avatar" href="{{ '/about/' | relative_url }}" aria-label="About me">
+      {% if site.avatar != "" %}<img src="{{ site.avatar | relative_url }}" alt="">{% else %}{% include pixel-cat.svg size=52 %}{% endif %}
+    </a>
+    <div>
+      <p class="ms-name">{{ site.author }} <span class="ms-online">(Online)</span></p>
+      <p class="ms-pm">{{ site.mood }}</p>
+    </div>
+  </div>
+  <dl class="ms-status">
+    <dt>studying</dt><dd>{{ site.currently_studying }}</dd>
+    {% if site.now_playing != "" %}<dt>playing</dt><dd>{{ site.now_playing }}</dd>{% endif %}
+  </dl>
+
+  {%- capture online -%}{%- endcapture -%}
+  {%- capture offline -%}{%- endcapture -%}
+  {%- assign n_on = 0 -%}{%- assign n_off = 0 -%}
+  {%- for s in site.data.sections -%}
+    {%- if s.kind == "notes" or s.kind == "reviews" -%}{%- assign count = site.posts | where: "section", s.id | size -%}{%- if count == 1 -%}{%- assign unit = "note" -%}{%- else -%}{%- assign unit = "notes" -%}{%- endif -%}
+    {%- elsif s.kind == "projects" -%}{%- assign count = site.data.projects | size -%}{%- if count == 1 -%}{%- assign unit = "project" -%}{%- else -%}{%- assign unit = "projects" -%}{%- endif -%}
+    {%- elsif s.kind == "album" -%}{%- assign count = site.data.album | size -%}{%- assign unit = "pics" -%}
+    {%- else -%}{%- assign count = -1 -%}{%- endif -%}
+    {%- capture row -%}<li{% if include.current == s.id %} class="here"{% endif %}><a href="{{ s.url | relative_url }}"><span class="ms-dot"></span>{{ s.name }}{% if count >= 0 %} <span class="ms-sub">({{ count }} {{ unit }})</span>{% endif %}</a></li>{%- endcapture -%}
+    {%- if count == 0 -%}{%- capture offline -%}{{ offline }}{{ row }}{%- endcapture -%}{%- assign n_off = n_off | plus: 1 -%}
+    {%- else -%}{%- capture online -%}{{ online }}{{ row }}{%- endcapture -%}{%- assign n_on = n_on | plus: 1 -%}{%- endif -%}
+  {%- endfor -%}
+
+  <div class="ms-list">
+    <p class="ms-group">⊟ Online ({{ n_on }})</p>
+    <ul class="ms-contacts">{{ online }}</ul>
+    {% if n_off > 0 %}
+    <p class="ms-group">⊟ Offline ({{ n_off }})</p>
+    <ul class="ms-contacts offline">{{ offline }}</ul>
+    {% endif %}
+  </div>
+
+  {% if site.data.updates.size > 0 %}
+  <div class="ms-today">
+    <p class="ms-group">✦ Niki Today</p>
+    <ul>
+      {% for u in site.data.updates limit: 4 %}<li><time>{{ u.date | date: "%d/%m" }}</time> {{ u.text }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  <p class="ms-foot">✦ messenger <span>.niki</span></p>
+</aside>

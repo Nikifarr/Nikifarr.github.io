@@ -1,0 +1,9 @@
+# Your photo album. Put images in assets/album/ and list them here, newest first.
+#
+# - image: /assets/album/first-jam.jpg
+#   caption: "my first game jam!!"
+#   date: 2026-12-01
+#   tilt: -2          # optional: rotate the polaroid a little (degrees)
+#
+# While this list is empty, the album shows placeholder polaroids.
+[]

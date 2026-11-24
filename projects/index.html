@@ -1,0 +1,41 @@
+---
+title: "Projects"
+section: projects
+permalink: /projects/
+---
+{%- assign sec = site.data.sections | where: "id", "projects" | first -%}
+<header class="sec-head" style="--f: {{ sec.color }}">
+  <span class="sec-icon"><svg><use href="#i-projects"/></svg></span>
+  <div><h1>{{ sec.name }}</h1><p>{{ sec.blurb }}</p></div>
+  <span class="sec-count">{{ site.data.projects.size }} {% if site.data.projects.size == 1 %}project{% else %}projects{% endif %}</span>
+</header>
+
+<div class="project-grid">
+  {% for p in site.data.projects %}
+  <article class="polaroid project" style="--tilt: {% cycle '-1.5deg', '1.2deg', '-0.6deg', '1.8deg' %}">
+    <span class="tape" aria-hidden="true"></span>
+    <div class="pol-img">{% if p.image %}<img src="{{ p.image | relative_url }}" alt="Screenshot of {{ p.title }}">{% else %}<svg><use href="#i-projects"/></svg>{% endif %}</div>
+    <h2>{{ p.title }}</h2>
+    <p>{{ p.description }}</p>
+    {% if p.progress %}
+    <div class="xp" role="img" aria-label="{{ p.progress }}% done">
+      <span class="xp-label">{{ p.status | default: "progress" }}</span>
+      <span class="xp-bar">{% assign filled = p.progress | divided_by: 10 %}{% for i in (1..10) %}<i{% if i <= filled %} class="on"{% endif %}></i>{% endfor %}</span>
+      <span class="xp-num">{{ p.progress }}%</span>
+    </div>
+    {% elsif p.status %}<p class="status">{{ p.status }}</p>{% endif %}
+    {% if p.tools %}<p class="tools">{% for t in p.tools %}<span class="tag">{{ t }}</span>{% endfor %}</p>{% endif %}
+    {% if p.links.size > 0 or p.note %}
+    <p class="pol-links">
+      {% for l in p.links %}<a class="btn" href="{{ l.url }}">{{ l.name }}</a>{% endfor %}
+      {% if p.note %}<a class="btn alt" href="{{ p.note | relative_url }}">read notes</a>{% endif %}
+    </p>
+    {% endif %}
+  </article>
+  {% endfor %}
+  <article class="polaroid project add-new" style="--tilt: 1deg">
+    <div class="pol-img dashed"><span>+</span></div>
+    <h2>next project?</h2>
+    <p class="muted">Add it in <code>_data/projects.yml</code>.</p>
+  </article>
+</div>
